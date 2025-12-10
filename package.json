@@ -1,0 +1,957 @@
+{
+  "name": "git-flow-next-extension",
+  "displayName": "Git Flow Next",
+  "description": "A VS Code extension for Git Flow Next workflow management",
+  "version": "0.1.0",
+  "publisher": "gittower",
+  "license": "MIT",
+  "author": {
+    "name": "Git Tower",
+    "url": "https://www.git-tower.com"
+  },
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gittower/git-flow-next-vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/gittower/git-flow-next-vscode/issues"
+  },
+  "homepage": "https://github.com/gittower/git-flow-next-vscode#readme",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "SCM Providers"
+  ],
+  "keywords": [
+    "git",
+    "git-flow",
+    "gitflow",
+    "branching",
+    "workflow",
+    "version-control"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "git-flow-next",
+          "title": "Git Flow Next",
+          "icon": "image-4-2.svg"
+        }
+      ]
+    },
+    "views": {
+      "git-flow-next": [
+        {
+          "id": "git-flow-next.view",
+          "name": "Overview"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "git-flow-next.view",
+        "contents": "Git Flow Next is not installed.\n\nThis extension requires git-flow-next to manage your Git Flow workflow.\n\n[Install git-flow-next](command:git-flow-next.installPackage)\n\n[View Installation Instructions](command:git-flow-next.showInstallInstructions)",
+        "when": "!git-flow-next.isInstalled"
+      },
+      {
+        "view": "git-flow-next.view",
+        "contents": "Welcome to Git Flow Next!\n\nGet started by initializing Git Flow in your repository.\n\n[Initialize Git Flow](command:git-flow-next.initFromWelcome)",
+        "when": "git-flow-next.isInstalled && !git-flow-next.isInitialized"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "git-flow-next.shorthand.finish",
+          "when": "gitFlowNext.isOnTopicBranch"
+        },
+        {
+          "command": "git-flow-next.shorthand.delete",
+          "when": "gitFlowNext.isOnTopicBranch"
+        },
+        {
+          "command": "git-flow-next.shorthand.rename",
+          "when": "gitFlowNext.isOnTopicBranch"
+        },
+        {
+          "command": "git-flow-next.shorthand.update",
+          "when": "gitFlowNext.isOnTopicBranch"
+        },
+        {
+          "command": "git-flow-next.shorthand.rebase",
+          "when": "gitFlowNext.isOnTopicBranch"
+        },
+        {
+          "command": "git-flow-next.shorthand.publish",
+          "when": "gitFlowNext.isOnTopicBranch"
+        },
+        {
+          "command": "git-flow-next.feature.finish",
+          "when": "gitFlowNext.featuresExist"
+        },
+        {
+          "command": "git-flow-next.feature.delete",
+          "when": "gitFlowNext.featuresExist"
+        },
+        {
+          "command": "git-flow-next.feature.checkout",
+          "when": "gitFlowNext.featuresExist"
+        },
+        {
+          "command": "git-flow-next.feature.rename",
+          "when": "gitFlowNext.isOnFeatureBranch"
+        },
+        {
+          "command": "git-flow-next.feature.update",
+          "when": "gitFlowNext.featuresExist"
+        },
+        {
+          "command": "git-flow-next.release.finish",
+          "when": "gitFlowNext.releasesExist"
+        },
+        {
+          "command": "git-flow-next.release.delete",
+          "when": "gitFlowNext.releasesExist"
+        },
+        {
+          "command": "git-flow-next.release.checkout",
+          "when": "gitFlowNext.releasesExist"
+        },
+        {
+          "command": "git-flow-next.release.rename",
+          "when": "gitFlowNext.isOnReleaseBranch"
+        },
+        {
+          "command": "git-flow-next.release.update",
+          "when": "gitFlowNext.releasesExist"
+        },
+        {
+          "command": "git-flow-next.hotfix.finish",
+          "when": "gitFlowNext.hotfixesExist"
+        },
+        {
+          "command": "git-flow-next.hotfix.delete",
+          "when": "gitFlowNext.hotfixesExist"
+        },
+        {
+          "command": "git-flow-next.hotfix.checkout",
+          "when": "gitFlowNext.hotfixesExist"
+        },
+        {
+          "command": "git-flow-next.hotfix.rename",
+          "when": "gitFlowNext.isOnHotfixBranch"
+        },
+        {
+          "command": "git-flow-next.hotfix.update",
+          "when": "gitFlowNext.hotfixesExist"
+        },
+        {
+          "command": "git-flow-next.support.finish",
+          "when": "gitFlowNext.supportsExist"
+        },
+        {
+          "command": "git-flow-next.support.delete",
+          "when": "gitFlowNext.supportsExist"
+        },
+        {
+          "command": "git-flow-next.support.checkout",
+          "when": "gitFlowNext.supportsExist"
+        },
+        {
+          "command": "git-flow-next.support.rename",
+          "when": "gitFlowNext.isOnSupportBranch"
+        },
+        {
+          "command": "git-flow-next.support.update",
+          "when": "gitFlowNext.supportsExist"
+        },
+        {
+          "command": "git-flow-next.bugfix.finish",
+          "when": "gitFlowNext.bugfixesExist"
+        },
+        {
+          "command": "git-flow-next.bugfix.delete",
+          "when": "gitFlowNext.bugfixesExist"
+        },
+        {
+          "command": "git-flow-next.bugfix.checkout",
+          "when": "gitFlowNext.bugfixesExist"
+        },
+        {
+          "command": "git-flow-next.bugfix.rename",
+          "when": "gitFlowNext.isOnBugfixBranch"
+        },
+        {
+          "command": "git-flow-next.bugfix.update",
+          "when": "gitFlowNext.bugfixesExist"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "git-flow-next.installPackage",
+        "title": "Install git-flow-next",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.showInstallInstructions",
+        "title": "Show Installation Instructions",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.init",
+        "title": "Initialize Git Flow",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.initFromWelcome",
+        "title": "Initialize Git Flow (Direct)"
+      },
+      {
+        "command": "git-flow-next.feature.start",
+        "title": "Feature: Start",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.feature.finish",
+        "title": "Feature: Finish",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.feature.list",
+        "title": "Feature: List",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.feature.checkout",
+        "title": "Feature: Checkout",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.feature.delete",
+        "title": "Feature: Delete",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.feature.rename",
+        "title": "Feature: Rename",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.feature.update",
+        "title": "Feature: Update",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.release.start",
+        "title": "Release: Start",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.release.finish",
+        "title": "Release: Finish",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.release.list",
+        "title": "Release: List",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.release.checkout",
+        "title": "Release: Checkout",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.release.delete",
+        "title": "Release: Delete",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.release.rename",
+        "title": "Release: Rename",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.release.update",
+        "title": "Release: Update",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.hotfix.start",
+        "title": "Hotfix: Start",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.hotfix.finish",
+        "title": "Hotfix: Finish",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.hotfix.list",
+        "title": "Hotfix: List",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.hotfix.checkout",
+        "title": "Hotfix: Checkout",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.hotfix.delete",
+        "title": "Hotfix: Delete",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.hotfix.rename",
+        "title": "Hotfix: Rename",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.hotfix.update",
+        "title": "Hotfix: Update",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.support.start",
+        "title": "Support: Start",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.support.finish",
+        "title": "Support: Finish",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.support.list",
+        "title": "Support: List",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.support.checkout",
+        "title": "Support: Checkout",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.support.delete",
+        "title": "Support: Delete",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.support.rename",
+        "title": "Support: Rename",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.support.update",
+        "title": "Support: Update",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.bugfix.start",
+        "title": "Bugfix: Start",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.bugfix.finish",
+        "title": "Bugfix: Finish",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.bugfix.list",
+        "title": "Bugfix: List",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.bugfix.checkout",
+        "title": "Bugfix: Checkout",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.bugfix.delete",
+        "title": "Bugfix: Delete",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.bugfix.rename",
+        "title": "Bugfix: Rename",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.bugfix.update",
+        "title": "Bugfix: Update",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.shorthand.finish",
+        "title": "Finish Current Branch",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.shorthand.delete",
+        "title": "Delete Current Branch",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.shorthand.rebase",
+        "title": "Rebase Current Branch",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.shorthand.update",
+        "title": "Update Current Branch",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.shorthand.rename",
+        "title": "Rename Current Branch",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.shorthand.publish",
+        "title": "Publish Current Branch",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.overview",
+        "title": "Show Overview",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.config",
+        "title": "Configure Git Flow",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.finish.continue",
+        "title": "Finish: Continue (after resolving conflicts)",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.finish.abort",
+        "title": "Finish: Abort Operation",
+        "category": "Git Flow Next"
+      }
+    ],
+    "configuration": {
+      "title": "Git Flow Next",
+      "properties": {
+        "gitFlowNext.feature.finishStrategy": {
+          "type": "string",
+          "default": "merge",
+          "enum": [
+            "merge",
+            "rebase",
+            "squash",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Create a merge commit (preserves branch history)",
+            "Rebase commits onto parent branch (linear history)",
+            "Squash all commits into a single commit",
+            "Use the strategy configured in git-flow configuration"
+          ],
+          "description": "Merge strategy to use when finishing feature branches"
+        },
+        "gitFlowNext.release.finishStrategy": {
+          "type": "string",
+          "default": "merge",
+          "enum": [
+            "merge",
+            "rebase",
+            "squash",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Create a merge commit (preserves branch history)",
+            "Rebase commits onto parent branch (linear history)",
+            "Squash all commits into a single commit",
+            "Use the strategy configured in git-flow configuration"
+          ],
+          "description": "Merge strategy to use when finishing release branches"
+        },
+        "gitFlowNext.hotfix.finishStrategy": {
+          "type": "string",
+          "default": "merge",
+          "enum": [
+            "merge",
+            "rebase",
+            "squash",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Create a merge commit (preserves branch history)",
+            "Rebase commits onto parent branch (linear history)",
+            "Squash all commits into a single commit",
+            "Use the strategy configured in git-flow configuration"
+          ],
+          "description": "Merge strategy to use when finishing hotfix branches"
+        },
+        "gitFlowNext.support.finishStrategy": {
+          "type": "string",
+          "default": "merge",
+          "enum": [
+            "merge",
+            "rebase",
+            "squash",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Create a merge commit (preserves branch history)",
+            "Rebase commits onto parent branch (linear history)",
+            "Squash all commits into a single commit",
+            "Use the strategy configured in git-flow configuration"
+          ],
+          "description": "Merge strategy to use when finishing support branches"
+        },
+        "gitFlowNext.bugfix.finishStrategy": {
+          "type": "string",
+          "default": "merge",
+          "enum": [
+            "merge",
+            "rebase",
+            "squash",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Create a merge commit (preserves branch history)",
+            "Rebase commits onto parent branch (linear history)",
+            "Squash all commits into a single commit",
+            "Use the strategy configured in git-flow configuration"
+          ],
+          "description": "Merge strategy to use when finishing bugfix branches"
+        },
+        "gitFlowNext.feature.updateStrategy": {
+          "type": "string",
+          "default": "merge",
+          "enum": [
+            "merge",
+            "rebase",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Merge parent branch changes into current branch",
+            "Rebase current branch onto parent branch",
+            "Use the strategy configured in git-flow configuration"
+          ],
+          "description": "Strategy to use when updating feature branches from parent"
+        },
+        "gitFlowNext.release.updateStrategy": {
+          "type": "string",
+          "default": "merge",
+          "enum": [
+            "merge",
+            "rebase",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Merge parent branch changes into current branch",
+            "Rebase current branch onto parent branch",
+            "Use the strategy configured in git-flow configuration"
+          ],
+          "description": "Strategy to use when updating release branches from parent"
+        },
+        "gitFlowNext.hotfix.updateStrategy": {
+          "type": "string",
+          "default": "merge",
+          "enum": [
+            "merge",
+            "rebase",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Merge parent branch changes into current branch",
+            "Rebase current branch onto parent branch",
+            "Use the strategy configured in git-flow configuration"
+          ],
+          "description": "Strategy to use when updating hotfix branches from parent"
+        },
+        "gitFlowNext.support.updateStrategy": {
+          "type": "string",
+          "default": "merge",
+          "enum": [
+            "merge",
+            "rebase",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Merge parent branch changes into current branch",
+            "Rebase current branch onto parent branch",
+            "Use the strategy configured in git-flow configuration"
+          ],
+          "description": "Strategy to use when updating support branches from parent"
+        },
+        "gitFlowNext.bugfix.updateStrategy": {
+          "type": "string",
+          "default": "merge",
+          "enum": [
+            "merge",
+            "rebase",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Merge parent branch changes into current branch",
+            "Rebase current branch onto parent branch",
+            "Use the strategy configured in git-flow configuration"
+          ],
+          "description": "Strategy to use when updating bugfix branches from parent"
+        },
+        "gitFlowNext.remoteName": {
+          "type": "string",
+          "default": "origin",
+          "description": "Name of the remote to use for git-flow operations (e.g., 'origin', 'upstream')"
+        },
+        "gitFlowNext.feature.startPoint": {
+          "type": "string",
+          "default": "",
+          "description": "Default branch to start feature branches from (leave empty to use parent branch)"
+        },
+        "gitFlowNext.release.startPoint": {
+          "type": "string",
+          "default": "",
+          "description": "Default branch to start release branches from (leave empty to use parent branch). Typically 'develop' for releases that merge to 'main'"
+        },
+        "gitFlowNext.hotfix.startPoint": {
+          "type": "string",
+          "default": "",
+          "description": "Default branch to start hotfix branches from (leave empty to use parent branch)"
+        },
+        "gitFlowNext.support.startPoint": {
+          "type": "string",
+          "default": "",
+          "description": "Default branch to start support branches from (leave empty to use parent branch)"
+        },
+        "gitFlowNext.bugfix.startPoint": {
+          "type": "string",
+          "default": "",
+          "description": "Default branch to start bugfix branches from (leave empty to use parent branch)"
+        },
+        "gitFlowNext.fetchBeforeStart": {
+          "type": "boolean",
+          "default": false,
+          "description": "Fetch from remote before starting new branches"
+        },
+        "gitFlowNext.feature.fastForward": {
+          "type": "string",
+          "default": "no-ff",
+          "enum": [
+            "no-ff",
+            "ff",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Always create merge commit (no fast-forward)",
+            "Allow fast-forward when possible",
+            "Use git-flow default behavior"
+          ],
+          "description": "Fast-forward behavior when finishing feature branches"
+        },
+        "gitFlowNext.release.fastForward": {
+          "type": "string",
+          "default": "no-ff",
+          "enum": [
+            "no-ff",
+            "ff",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Always create merge commit (no fast-forward)",
+            "Allow fast-forward when possible",
+            "Use git-flow default behavior"
+          ],
+          "description": "Fast-forward behavior when finishing release branches"
+        },
+        "gitFlowNext.hotfix.fastForward": {
+          "type": "string",
+          "default": "no-ff",
+          "enum": [
+            "no-ff",
+            "ff",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Always create merge commit (no fast-forward)",
+            "Allow fast-forward when possible",
+            "Use git-flow default behavior"
+          ],
+          "description": "Fast-forward behavior when finishing hotfix branches"
+        },
+        "gitFlowNext.support.fastForward": {
+          "type": "string",
+          "default": "no-ff",
+          "enum": [
+            "no-ff",
+            "ff",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Always create merge commit (no fast-forward)",
+            "Allow fast-forward when possible",
+            "Use git-flow default behavior"
+          ],
+          "description": "Fast-forward behavior when finishing support branches"
+        },
+        "gitFlowNext.bugfix.fastForward": {
+          "type": "string",
+          "default": "no-ff",
+          "enum": [
+            "no-ff",
+            "ff",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Always create merge commit (no fast-forward)",
+            "Allow fast-forward when possible",
+            "Use git-flow default behavior"
+          ],
+          "description": "Fast-forward behavior when finishing bugfix branches"
+        },
+        "gitFlowNext.feature.preserveMerges": {
+          "type": "boolean",
+          "default": false,
+          "description": "Preserve merge commits during rebase when finishing feature branches"
+        },
+        "gitFlowNext.release.preserveMerges": {
+          "type": "boolean",
+          "default": false,
+          "description": "Preserve merge commits during rebase when finishing release branches"
+        },
+        "gitFlowNext.hotfix.preserveMerges": {
+          "type": "boolean",
+          "default": false,
+          "description": "Preserve merge commits during rebase when finishing hotfix branches"
+        },
+        "gitFlowNext.support.preserveMerges": {
+          "type": "boolean",
+          "default": false,
+          "description": "Preserve merge commits during rebase when finishing support branches"
+        },
+        "gitFlowNext.bugfix.preserveMerges": {
+          "type": "boolean",
+          "default": false,
+          "description": "Preserve merge commits during rebase when finishing bugfix branches"
+        },
+        "gitFlowNext.feature.deleteRemote": {
+          "type": "boolean",
+          "default": false,
+          "description": "Delete remote branch when finishing feature branches"
+        },
+        "gitFlowNext.release.deleteRemote": {
+          "type": "boolean",
+          "default": false,
+          "description": "Delete remote branch when finishing release branches"
+        },
+        "gitFlowNext.hotfix.deleteRemote": {
+          "type": "boolean",
+          "default": false,
+          "description": "Delete remote branch when finishing hotfix branches"
+        },
+        "gitFlowNext.support.deleteRemote": {
+          "type": "boolean",
+          "default": false,
+          "description": "Delete remote branch when finishing support branches"
+        },
+        "gitFlowNext.bugfix.deleteRemote": {
+          "type": "boolean",
+          "default": false,
+          "description": "Delete remote branch when finishing bugfix branches"
+        },
+        "gitFlowNext.feature.createTag": {
+          "type": "boolean",
+          "default": false,
+          "description": "Create a tag when finishing feature branches"
+        },
+        "gitFlowNext.release.createTag": {
+          "type": "boolean",
+          "default": true,
+          "description": "Create a tag when finishing release branches"
+        },
+        "gitFlowNext.hotfix.createTag": {
+          "type": "boolean",
+          "default": true,
+          "description": "Create a tag when finishing hotfix branches"
+        },
+        "gitFlowNext.support.createTag": {
+          "type": "boolean",
+          "default": false,
+          "description": "Create a tag when finishing support branches"
+        },
+        "gitFlowNext.bugfix.createTag": {
+          "type": "boolean",
+          "default": false,
+          "description": "Create a tag when finishing bugfix branches"
+        },
+        "gitFlowNext.signTags": {
+          "type": "boolean",
+          "default": false,
+          "description": "Sign tags with GPG when creating them"
+        },
+        "gitFlowNext.gpgSigningKey": {
+          "type": "string",
+          "default": "",
+          "description": "GPG key ID to use for signing tags (leave empty to use git default)"
+        },
+        "gitFlowNext.feature.tagPrefix": {
+          "type": "string",
+          "default": "",
+          "description": "Prefix for tags created when finishing feature branches (e.g., 'v', 'feature-')"
+        },
+        "gitFlowNext.release.tagPrefix": {
+          "type": "string",
+          "default": "v",
+          "description": "Prefix for tags created when finishing release branches (e.g., 'v' creates tags like 'v1.0.0')"
+        },
+        "gitFlowNext.hotfix.tagPrefix": {
+          "type": "string",
+          "default": "v",
+          "description": "Prefix for tags created when finishing hotfix branches (e.g., 'v' creates tags like 'v1.0.1')"
+        },
+        "gitFlowNext.support.tagPrefix": {
+          "type": "string",
+          "default": "support-",
+          "description": "Prefix for tags created when finishing support branches (e.g., 'support-' creates tags like 'support-1.0')"
+        },
+        "gitFlowNext.bugfix.tagPrefix": {
+          "type": "string",
+          "default": "",
+          "description": "Prefix for tags created when finishing bugfix branches (e.g., 'bugfix-')"
+        },
+        "gitFlowNext.promptForTagMessage": {
+          "type": "boolean",
+          "default": false,
+          "description": "Prompt for a custom tag message when finishing branches with tags enabled"
+        },
+        "gitFlowNext.feature.keepBranch": {
+          "type": "string",
+          "default": "delete",
+          "enum": [
+            "delete",
+            "keep",
+            "keep-local",
+            "keep-remote",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Delete both local and remote branches",
+            "Keep both local and remote branches",
+            "Keep local branch only, delete remote",
+            "Keep remote branch only, delete local",
+            "Use git-flow default behavior"
+          ],
+          "description": "Branch retention behavior when finishing feature branches"
+        },
+        "gitFlowNext.release.keepBranch": {
+          "type": "string",
+          "default": "delete",
+          "enum": [
+            "delete",
+            "keep",
+            "keep-local",
+            "keep-remote",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Delete both local and remote branches",
+            "Keep both local and remote branches",
+            "Keep local branch only, delete remote",
+            "Keep remote branch only, delete local",
+            "Use git-flow default behavior"
+          ],
+          "description": "Branch retention behavior when finishing release branches"
+        },
+        "gitFlowNext.hotfix.keepBranch": {
+          "type": "string",
+          "default": "delete",
+          "enum": [
+            "delete",
+            "keep",
+            "keep-local",
+            "keep-remote",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Delete both local and remote branches",
+            "Keep both local and remote branches",
+            "Keep local branch only, delete remote",
+            "Keep remote branch only, delete local",
+            "Use git-flow default behavior"
+          ],
+          "description": "Branch retention behavior when finishing hotfix branches"
+        },
+        "gitFlowNext.support.keepBranch": {
+          "type": "string",
+          "default": "delete",
+          "enum": [
+            "delete",
+            "keep",
+            "keep-local",
+            "keep-remote",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Delete both local and remote branches",
+            "Keep both local and remote branches",
+            "Keep local branch only, delete remote",
+            "Keep remote branch only, delete local",
+            "Use git-flow default behavior"
+          ],
+          "description": "Branch retention behavior when finishing support branches"
+        },
+        "gitFlowNext.bugfix.keepBranch": {
+          "type": "string",
+          "default": "delete",
+          "enum": [
+            "delete",
+            "keep",
+            "keep-local",
+            "keep-remote",
+            "use-git-config"
+          ],
+          "enumDescriptions": [
+            "Delete both local and remote branches",
+            "Keep both local and remote branches",
+            "Keep local branch only, delete remote",
+            "Keep remote branch only, delete local",
+            "Use git-flow default behavior"
+          ],
+          "description": "Branch retention behavior when finishing bugfix branches"
+        },
+        "gitFlowNext.forceDelete": {
+          "type": "boolean",
+          "default": false,
+          "description": "Force delete branches even if not fully merged"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run esbuild-base -- --minify",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
+    "esbuild-test": "esbuild ./src/test/suite/index.ts ./src/test/suite/extension.test.ts ./src/test/suite/integration.test.ts ./src/test/suite/integration-direct.test.ts --bundle --outdir=out/test/suite --external:vscode --external:mocha --format=cjs --platform=node",
+    "esbuild": "npm run esbuild-base -- --sourcemap",
+    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+    "pretest": "npm run esbuild && npm run esbuild-test && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "esbuild": "^0.25.10",
+    "eslint": "^8.28.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.1.0",
+    "typescript": "^4.9.4"
+  }
+}

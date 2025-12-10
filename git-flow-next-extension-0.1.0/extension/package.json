@@ -1,0 +1,271 @@
+{
+  "name": "git-flow-next-extension",
+  "displayName": "Git Flow Next",
+  "description": "A VS Code extension for Git Flow Next workflow management",
+  "version": "0.1.0",
+  "publisher": "gittower",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other",
+    "SCM Providers"
+  ],
+  "keywords": [
+    "git",
+    "git-flow",
+    "gitflow",
+    "branching",
+    "workflow",
+    "version-control"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "git-flow-next.init",
+        "title": "Initialize Git Flow",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.feature.start",
+        "title": "Feature: Start",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.feature.finish",
+        "title": "Feature: Finish",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.feature.list",
+        "title": "Feature: List",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.feature.checkout",
+        "title": "Feature: Checkout",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.feature.delete",
+        "title": "Feature: Delete",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.feature.rename",
+        "title": "Feature: Rename",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.feature.update",
+        "title": "Feature: Update",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.release.start",
+        "title": "Release: Start",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.release.finish",
+        "title": "Release: Finish",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.release.list",
+        "title": "Release: List",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.release.checkout",
+        "title": "Release: Checkout",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.release.delete",
+        "title": "Release: Delete",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.release.rename",
+        "title": "Release: Rename",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.release.update",
+        "title": "Release: Update",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.hotfix.start",
+        "title": "Hotfix: Start",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.hotfix.finish",
+        "title": "Hotfix: Finish",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.hotfix.list",
+        "title": "Hotfix: List",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.hotfix.checkout",
+        "title": "Hotfix: Checkout",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.hotfix.delete",
+        "title": "Hotfix: Delete",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.hotfix.rename",
+        "title": "Hotfix: Rename",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.hotfix.update",
+        "title": "Hotfix: Update",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.support.start",
+        "title": "Support: Start",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.support.finish",
+        "title": "Support: Finish",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.support.list",
+        "title": "Support: List",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.support.checkout",
+        "title": "Support: Checkout",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.support.delete",
+        "title": "Support: Delete",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.support.rename",
+        "title": "Support: Rename",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.support.update",
+        "title": "Support: Update",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.bugfix.start",
+        "title": "Bugfix: Start",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.bugfix.finish",
+        "title": "Bugfix: Finish",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.bugfix.list",
+        "title": "Bugfix: List",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.bugfix.checkout",
+        "title": "Bugfix: Checkout",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.bugfix.delete",
+        "title": "Bugfix: Delete",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.bugfix.rename",
+        "title": "Bugfix: Rename",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.bugfix.update",
+        "title": "Bugfix: Update",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.shorthand.finish",
+        "title": "Finish Current Branch",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.shorthand.delete",
+        "title": "Delete Current Branch",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.shorthand.rebase",
+        "title": "Rebase Current Branch",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.shorthand.update",
+        "title": "Update Current Branch",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.shorthand.rename",
+        "title": "Rename Current Branch",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.shorthand.publish",
+        "title": "Publish Current Branch",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.overview",
+        "title": "Show Overview",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.config",
+        "title": "Configure Git Flow",
+        "category": "Git Flow Next"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run esbuild-base -- --minify",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
+    "esbuild": "npm run esbuild-base -- --sourcemap",
+    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+    "pretest": "npm run esbuild && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "esbuild": "^0.17.11",
+    "eslint": "^8.28.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.1.0",
+    "typescript": "^4.9.4",
+    "@vscode/test-electron": "^2.2.0"
+  }
+}
