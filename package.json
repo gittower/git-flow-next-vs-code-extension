@@ -12,12 +12,12 @@
   "icon": "icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gittower/git-flow-next-vscode"
+    "url": "https://github.com/gittower/git-flow-next-vs-code-extension"
   },
   "bugs": {
-    "url": "https://github.com/gittower/git-flow-next-vscode/issues"
+    "url": "https://github.com/gittower/git-flow-next-vs-code-extension"
   },
-  "homepage": "https://github.com/gittower/git-flow-next-vscode#readme",
+  "homepage": "https://github.com/gittower/git-flow-next-vs-code-extension#readme",
   "engines": {
     "vscode": "^1.74.0"
   },
