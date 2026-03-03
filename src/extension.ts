@@ -69,21 +69,19 @@ class GitFlowTreeDataProvider implements vscode.TreeDataProvider<GitFlowTreeItem
         }
 
         // Get branches for the selected type
-        const branchType = element.label.toLowerCase().replace(/s$/, ''); // Remove trailing 's'
+        const typeMap: Record<string, string> = {
+            'features': 'feature',
+            'releases': 'release',
+            'hotfixes': 'hotfix',
+            'bugfixes': 'bugfix',
+            'support': 'support'
+        };
+        const branchType = typeMap[(element.label as string).toLowerCase()];
         const branches = await this.getBranchList(branchType);
 
         if (branches.length === 0) {
-            // Return a single item showing "No branches found"
-            // Fix pluralization for proper grammar
-            let branchTypeName = branchType;
-            if (branchType === 'hotfixe') {
-                branchTypeName = 'hotfix';
-            } else if (branchType === 'bugfixe') {
-                branchTypeName = 'bugfix';
-            }
-
             const emptyItem = new GitFlowTreeItem(
-                `No ${branchTypeName} branches found`,
+                `No ${branchType} branches found`,
                 vscode.TreeItemCollapsibleState.None
             );
             emptyItem.contextValue = 'empty';
