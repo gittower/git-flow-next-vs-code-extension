@@ -192,6 +192,120 @@
           "command": "git-flow-next.bugfix.update",
           "when": "gitFlowNext.bugfixesExist"
         }
+      ],
+      "view/title": [
+        {
+          "command": "git-flow-next.refresh",
+          "when": "view == git-flow-next.view && git-flow-next.isInitialized && git-flow-next.isInstalled",
+          "group": "navigation@1"
+        },
+        {
+          "command": "git-flow-next.quickAdd",
+          "when": "view == git-flow-next.view && git-flow-next.isInitialized && git-flow-next.isInstalled",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "git-flow-next.feature.finish",
+          "when": "view == git-flow-next.view && viewItem == feature",
+          "group": "1_modification"
+        },
+        {
+          "command": "git-flow-next.feature.delete",
+          "when": "view == git-flow-next.view && viewItem == feature",
+          "group": "1_modification"
+        },
+        {
+          "command": "git-flow-next.feature.rename",
+          "when": "view == git-flow-next.view && viewItem == feature",
+          "group": "1_modification"
+        },
+        {
+          "command": "git-flow-next.feature.update",
+          "when": "view == git-flow-next.view && viewItem == feature",
+          "group": "2_management"
+        },
+        {
+          "command": "git-flow-next.release.finish",
+          "when": "view == git-flow-next.view && viewItem == release",
+          "group": "1_modification"
+        },
+        {
+          "command": "git-flow-next.release.delete",
+          "when": "view == git-flow-next.view && viewItem == release",
+          "group": "1_modification"
+        },
+        {
+          "command": "git-flow-next.release.rename",
+          "when": "view == git-flow-next.view && viewItem == release",
+          "group": "1_modification"
+        },
+        {
+          "command": "git-flow-next.release.update",
+          "when": "view == git-flow-next.view && viewItem == release",
+          "group": "2_management"
+        },
+        {
+          "command": "git-flow-next.hotfix.finish",
+          "when": "view == git-flow-next.view && viewItem == hotfix",
+          "group": "1_modification"
+        },
+        {
+          "command": "git-flow-next.hotfix.delete",
+          "when": "view == git-flow-next.view && viewItem == hotfix",
+          "group": "1_modification"
+        },
+        {
+          "command": "git-flow-next.hotfix.rename",
+          "when": "view == git-flow-next.view && viewItem == hotfix",
+          "group": "1_modification"
+        },
+        {
+          "command": "git-flow-next.hotfix.update",
+          "when": "view == git-flow-next.view && viewItem == hotfix",
+          "group": "2_management"
+        },
+        {
+          "command": "git-flow-next.support.finish",
+          "when": "view == git-flow-next.view && viewItem == support",
+          "group": "1_modification"
+        },
+        {
+          "command": "git-flow-next.support.delete",
+          "when": "view == git-flow-next.view && viewItem == support",
+          "group": "1_modification"
+        },
+        {
+          "command": "git-flow-next.support.rename",
+          "when": "view == git-flow-next.view && viewItem == support",
+          "group": "1_modification"
+        },
+        {
+          "command": "git-flow-next.support.update",
+          "when": "view == git-flow-next.view && viewItem == support",
+          "group": "2_management"
+        },
+        {
+          "command": "git-flow-next.bugfix.finish",
+          "when": "view == git-flow-next.view && viewItem == bugfix",
+          "group": "1_modification"
+        },
+        {
+          "command": "git-flow-next.bugfix.delete",
+          "when": "view == git-flow-next.view && viewItem == bugfix",
+          "group": "1_modification"
+        },
+        {
+          "command": "git-flow-next.bugfix.rename",
+          "when": "view == git-flow-next.view && viewItem == bugfix",
+          "group": "1_modification"
+        },
+        {
+          "command": "git-flow-next.bugfix.update",
+          "when": "view == git-flow-next.view && viewItem == bugfix",
+          "group": "2_management"
+        }
       ]
     },
     "commands": [
@@ -437,6 +551,18 @@
       {
         "command": "git-flow-next.finish.abort",
         "title": "Finish: Abort Operation",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.refresh",
+        "title": "Refresh Overview",
+        "icon": "$(refresh)",
+        "category": "Git Flow Next"
+      },
+      {
+        "command": "git-flow-next.quickAdd",
+        "title": "Add Branch",
+        "icon": "$(plus)",
         "category": "Git Flow Next"
       }
     ],

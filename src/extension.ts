@@ -89,8 +89,8 @@ class GitFlowTreeDataProvider implements vscode.TreeDataProvider<GitFlowTreeItem
             return [emptyItem];
         }
 
-        return branches.map(branch =>
-            new GitFlowTreeItem(
+        return branches.map(branch => {
+            const item = new GitFlowTreeItem(
                 branch,
                 vscode.TreeItemCollapsibleState.None,
                 {
@@ -98,8 +98,10 @@ class GitFlowTreeDataProvider implements vscode.TreeDataProvider<GitFlowTreeItem
                     title: 'Checkout Branch',
                     arguments: [branch]
                 }
-            )
-        );
+            );
+            item.contextValue = branchType; // Set context value for right-click menu
+            return item;
+        });
     }
 
     private async isGitFlowNextInstalled(): Promise<boolean> {
@@ -155,6 +157,17 @@ export function activate(context: vscode.ExtensionContext) {
     const treeDataProvider = new GitFlowTreeDataProvider();
     const treeView = vscode.window.createTreeView('git-flow-next.view', { treeDataProvider });
     context.subscriptions.push(treeView);
+
+    // Register refresh command early so header button works immediately
+    const refreshCommand = vscode.commands.registerCommand('git-flow-next.refresh', async () => {
+        try {
+            await updateContextVariables();
+            treeDataProvider.refresh();
+        } catch (error) {
+            vscode.window.showErrorMessage(`Failed to refresh: ${error}`);
+        }
+    });
+    context.subscriptions.push(refreshCommand);
 
     // Storage key for tracking declined installations per repository
     const DECLINED_INSTALL_KEY = 'git-flow-next.declinedInstallations';
@@ -222,9 +235,9 @@ export function activate(context: vscode.ExtensionContext) {
             treeDataProvider.refresh();
 
             const branchInfo = await getCurrentBranch();
-            
+
             // Set branch type contexts
-            await vscode.commands.executeCommand('setContext', contextKeys.isOnTopicBranch, 
+            await vscode.commands.executeCommand('setContext', contextKeys.isOnTopicBranch,
                 branchInfo.type !== 'main' && branchInfo.type !== 'develop' && branchInfo.type !== 'unknown');
             await vscode.commands.executeCommand('setContext', contextKeys.isOnFeatureBranch, branchInfo.type === 'feature');
             await vscode.commands.executeCommand('setContext', contextKeys.isOnReleaseBranch, branchInfo.type === 'release');
@@ -943,7 +956,7 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showInformationMessage('No branches found');
             return undefined;
         }
-        
+
         return await vscode.window.showQuickPick(branches, {
             placeHolder: prompt
         });
@@ -999,6 +1012,47 @@ export function activate(context: vscode.ExtensionContext) {
     // Show installation instructions
     const showInstallInstructionsCommand = vscode.commands.registerCommand('git-flow-next.showInstallInstructions', async () => {
         vscode.env.openExternal(vscode.Uri.parse('https://github.com/gittower/git-flow-next#installation'));
+    });
+
+    // Quick Add command - shows a menu to quickly start a branch of any type
+    const quickAddCommand = vscode.commands.registerCommand('git-flow-next.quickAdd', async () => {
+        try {
+            const selected = await vscode.window.showQuickPick([
+                { label: 'Feature', description: 'Start a feature branch' },
+                { label: 'Release', description: 'Start a release branch' },
+                { label: 'Hotfix', description: 'Start a hotfix branch' },
+                { label: 'Support', description: 'Start a support branch' },
+                { label: 'Bugfix', description: 'Start a bugfix branch' }
+            ], {
+                placeHolder: 'Select branch type to create'
+            });
+
+            if (!selected) {
+                return;
+            }
+
+            switch (selected.label) {
+                case 'Feature':
+                    await vscode.commands.executeCommand('git-flow-next.feature.start');
+                    break;
+                case 'Release':
+                    await vscode.commands.executeCommand('git-flow-next.release.start');
+                    break;
+                case 'Hotfix':
+                    await vscode.commands.executeCommand('git-flow-next.hotfix.start');
+                    break;
+                case 'Support':
+                    await vscode.commands.executeCommand('git-flow-next.support.start');
+                    break;
+                case 'Bugfix':
+                    await vscode.commands.executeCommand('git-flow-next.bugfix.start');
+                    break;
+            }
+
+            await updateContextVariables();
+        } catch (error) {
+            vscode.window.showErrorMessage(`Failed to quick add: ${error}`);
+        }
     });
 
     // Initialize Git Flow (with confirmation for command palette)
@@ -1987,6 +2041,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         installPackageCommand,
         showInstallInstructionsCommand,
+        quickAddCommand,
         initCommand,
         initFromWelcomeCommand,
         featureStartCommand, featureFinishCommand, featureListCommand, featureCheckoutCommand,
@@ -2006,4 +2061,4 @@ export function activate(context: vscode.ExtensionContext) {
     );
 }
 
-export function deactivate() {}
+export function deactivate() { }
