@@ -2,7 +2,7 @@
   "name": "git-flow-next-extension",
   "displayName": "Git Flow Next",
   "description": "A VS Code extension for Git Flow Next workflow management",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "gittower",
   "license": "MIT",
   "author": {
