@@ -1018,11 +1018,11 @@ export function activate(context: vscode.ExtensionContext) {
     const quickAddCommand = vscode.commands.registerCommand('git-flow-next.quickAdd', async () => {
         try {
             const selected = await vscode.window.showQuickPick([
-                { label: 'Feature', description: 'Start a feature branch' },
-                { label: 'Release', description: 'Start a release branch' },
-                { label: 'Hotfix', description: 'Start a hotfix branch' },
-                { label: 'Support', description: 'Start a support branch' },
-                { label: 'Bugfix', description: 'Start a bugfix branch' }
+                { label: 'Feature', description: 'Start a feature branch', command: 'git-flow-next.feature.start' },
+                { label: 'Release', description: 'Start a release branch', command: 'git-flow-next.release.start' },
+                { label: 'Hotfix', description: 'Start a hotfix branch', command: 'git-flow-next.hotfix.start' },
+                { label: 'Support', description: 'Start a support branch', command: 'git-flow-next.support.start' },
+                { label: 'Bugfix', description: 'Start a bugfix branch', command: 'git-flow-next.bugfix.start' }
             ], {
                 placeHolder: 'Select branch type to create'
             });
@@ -1031,25 +1031,7 @@ export function activate(context: vscode.ExtensionContext) {
                 return;
             }
 
-            switch (selected.label) {
-                case 'Feature':
-                    await vscode.commands.executeCommand('git-flow-next.feature.start');
-                    break;
-                case 'Release':
-                    await vscode.commands.executeCommand('git-flow-next.release.start');
-                    break;
-                case 'Hotfix':
-                    await vscode.commands.executeCommand('git-flow-next.hotfix.start');
-                    break;
-                case 'Support':
-                    await vscode.commands.executeCommand('git-flow-next.support.start');
-                    break;
-                case 'Bugfix':
-                    await vscode.commands.executeCommand('git-flow-next.bugfix.start');
-                    break;
-            }
-
-            await updateContextVariables();
+            await vscode.commands.executeCommand(selected.command);
         } catch (error) {
             vscode.window.showErrorMessage(`Failed to quick add: ${error}`);
         }
